@@ -32,36 +32,6 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       position: relative;
     }
-    #meal.loading::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border: 4px solid #ccc;
-      border-top: 4px solid #3498db;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-    .meal-section {
-      margin-bottom: 10px;
-    }
-    .meal-section h3 {
-      margin: 5px 0;
-      font-size: 1.1em;
-      color: #34495e;
-    }
-    .meal-section p {
-      margin: 0;
-      font-size: 0.9em;
-      color: #7f8c8d;
-    }
     .button-container {
       margin-top: 20px;
     }
@@ -78,13 +48,6 @@
     button:hover {
       background-color: #2980b9;
     }
-    input[type="date"] {
-      padding: 8px;
-      font-size: 1em;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      margin-top: 10px;
-    }
     footer {
       margin-top: 40px;
       font-size: 0.9em;
@@ -93,6 +56,7 @@
     footer a {
       text-decoration: none;
       color: #3498db;
+      margin: 0 5px;
       transition: color 0.3s ease;
     }
     footer a:hover {
@@ -112,7 +76,8 @@
   </div>
   
   <footer>
-    <a href="https://yijn10.xyz/information.html" target="_blank">information</a>
+    <a href="https://yijn10.xyz/information.html" target="_blank">information</a> | 
+    <a href="https://github.com/ryuyijun/ryuyijun.github.io/commits/main/" target="_blank">updates</a>
   </footer>
 
   <script>
@@ -170,20 +135,8 @@
           return response.json();
         })
         .then(data => {
-          const mealInfo = data?.mealServiceDietInfo?.[1]?.row?.[0];
-          if (mealInfo) {
-            const breakfast = mealInfo.MMEAL_SC_NM === "조식" ? mealInfo.DDISH_NM : "";
-            const lunch = mealInfo.MMEAL_SC_NM === "중식" ? mealInfo.DDISH_NM : "";
-            const dinner = mealInfo.MMEAL_SC_NM === "석식" ? mealInfo.DDISH_NM : "";
-
-            mealDiv.innerHTML = `
-              <div class="meal-section"><h3>아침</h3><p>${breakfast || "정보 없음"}</p></div>
-              <div class="meal-section"><h3>점심</h3><p>${lunch || "정보 없음"}</p></div>
-              <div class="meal-section"><h3>저녁</h3><p>${dinner || "정보 없음"}</p></div>
-            `;
-          } else {
-            mealDiv.innerText = "급식 정보가 없습니다.";
-          }
+          const mealInfo = data?.mealServiceDietInfo?.[1]?.row?.[0]?.DDISH_NM;
+          mealDiv.innerText = mealInfo ? mealInfo.replace(/<br\/>/g, "\n").replace(/(<([^>]+)>)/gi, "") : "급식 정보가 없습니다.";
         })
         .catch(error => {
           console.error("Error fetching meal data:", error);
