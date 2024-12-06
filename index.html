@@ -85,6 +85,19 @@
       border: 1px solid #ccc;
       margin-top: 10px;
     }
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #7f8c8d;
+    }
+    footer a {
+      text-decoration: none;
+      color: #3498db;
+      transition: color 0.3s ease;
+    }
+    footer a:hover {
+      color: #2980b9;
+    }
   </style>
 </head>
 <body>
@@ -98,6 +111,10 @@
     <button onclick="changeDate(1)">내일</button>
   </div>
   
+  <footer>
+    <a href="https://yijn10.xyz/information.html" target="_blank">information</a>
+  </footer>
+
   <script>
     let currentDate = new Date();
     
